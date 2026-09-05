@@ -1,0 +1,38 @@
+version: 1
+project:
+  name: "Trend Threads"
+  slug: "trend-threads"
+  status: building
+repository:
+  provider: github
+  repo: "0x-m-dev/trend-threads"
+  default_branch: main
+architecture:
+  language: python
+  framework: stdlib
+  frontend: null
+database:
+  engine: null
+  migration_path: null
+services:
+  app:
+    type: worker
+    healthcheck: null
+deployment:
+  provider: null
+  production_url: null
+  preview_url: null
+billing:
+  enabled: false
+  provider: null
+discord:
+  category_id: null
+  project_channel_id: null
+  deploy_channel_id: null
+  alert_channel_id: null
+  github_channel_id: null
+observability:
+  healthcheck: null
+  error_tracking: null
+spec:
+  path: SPEC.md
