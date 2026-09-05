@@ -1,4 +1,7 @@
+# Environment
 .env
+
+# Python
 .venv/
 venv/
 __pycache__/
@@ -7,6 +10,16 @@ __pycache__/
 .coverage
 dist/
 build/
+
+# Node
 node_modules/
 .next/
+
+# Mac
 .DS_Store
+
+# Generated data (scraper output)
+data/
+
+# Site (static rendering output)
+site/
