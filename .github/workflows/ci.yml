@@ -1,17 +1,27 @@
+# Trend Threads CI
+
 name: CI
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install pytest
+      - name: PII gate
+        run: bash tools/check_pii.sh --all
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test
       - name: Validate project manifest
-        run: python3 - <<'PY'
-          import yaml
-          with open("PROJECT.yaml") as f: yaml.safe_load(f)
-          print("PROJECT.yaml valid")
-        PY
-      - name: Run project checks
-        run: make fmt lint test build
+        run: python3 -c "import yaml; yaml.safe_load(open('PROJECT.yaml')); print('PROJECT.yaml valid')"

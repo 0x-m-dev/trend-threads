@@ -1,0 +1,464 @@
+{
+  "date": "2026-09-05",
+  "sources": [
+    "Hacker News",
+    "BBC Top News",
+    "The Verge",
+    "TechCrunch",
+    "Google Trends"
+  ],
+  "source_counts": {
+    "Hacker News": 20,
+    "BBC Top News": 34,
+    "The Verge": 10,
+    "TechCrunch": 20,
+    "Google Trends": 0
+  },
+  "total_trends": 86,
+  "trends": [
+    {
+      "title": "Private German rocket makes history, reaches orbit from European soil",
+      "url": "https://www.space.com/space-exploration/launches-spacecraft/isar-aerospace-second-launch-norway-andoya-spaceport-spectrum-rocket",
+      "source": "Hacker News",
+      "score": 258,
+      "hn_id": 49580369
+    },
+    {
+      "title": "The \"$60 Gaming PC\" – AMD BC-250 (2025)",
+      "url": "https://devquasar.com/hardware/the-60-gaming-pc-amd-bc-250/",
+      "source": "Hacker News",
+      "score": 254,
+      "hn_id": 49576386
+    },
+    {
+      "title": "Discovery of a new OpenAI agent message board",
+      "url": "https://collusion.wiki/",
+      "source": "Hacker News",
+      "score": 2072,
+      "hn_id": 49563355
+    },
+    {
+      "title": "Actively exploited sandbox RCE in all Chromium versions",
+      "url": "https://nvd.nist.gov/vuln/detail/cve-2026-85046",
+      "source": "Hacker News",
+      "score": 733,
+      "hn_id": 49570669
+    },
+    {
+      "title": "Nitter has more working instances than before the takedowns",
+      "url": "https://codeberg.org/mv12star/shitter/wiki/Instances",
+      "source": "Hacker News",
+      "score": 602,
+      "hn_id": 49571634
+    },
+    {
+      "title": "Formalizing Fermat's Last Theorem",
+      "url": "https://www.anthropic.com/research/formalizing-fermats-last-theorem",
+      "source": "Hacker News",
+      "score": 740,
+      "hn_id": 49568506
+    },
+    {
+      "title": "Statichost.eu – European static site hosting",
+      "url": "https://www.statichost.eu/",
+      "source": "Hacker News",
+      "score": 436,
+      "hn_id": 49569896
+    },
+    {
+      "title": "OKF Agent Memory – Git-native persistent memory for AI coding agents",
+      "url": "https://github.com/okf-memory/okf-agent-memory",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Falsehoods Programmers Believe About LANs",
+      "url": "https://dreamstation.systems/personal/lanfalsehoods.html",
+      "source": "Hacker News"
+    },
+    {
+      "title": "America's two largest school districts impose AI moratoriums",
+      "url": "https://www.techpolicy.press/americas-two-largest-school-districts-impose-ai-moratoriums/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "The revolt of the reader",
+      "url": "https://bcantrill.dtrace.org/2026/09/05/the-revolt-of-the-reader/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "South African diamond mines are closing due to weak sales and lab-grown stones",
+      "url": "https://www.wsj.com/business/diamond-mines-are-closing-and-south-africans-have-few-alternatives-fa3b8cbf",
+      "source": "Hacker News"
+    },
+    {
+      "title": "How AI is breaking the British state",
+      "url": "https://www.economist.com/leaders/2026/08/06/how-ai-is-breaking-the-british-state",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Finite time blowup for an averaged three-dimensional Navier-Stokes equation (2014)",
+      "url": "https://terrytao.wordpress.com/2014/02/04/finite-time-blowup-for-an-averaged-three-dimensional-navier-stokes-equation/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Isar Aerospace launch into orbit [video]",
+      "url": "https://www.youtube.com/watch?v=Ss1DUqLjecc",
+      "source": "Hacker News"
+    },
+    {
+      "title": "LLMs as a Cognitive Virus",
+      "url": "https://arxiv.org/abs/2609.03344",
+      "source": "Hacker News"
+    },
+    {
+      "title": "ISAR Aerospace 5 Sept Mission Onward and Upward",
+      "url": "https://isaraerospace.com/mission-updates-overview",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Learn Programming with OCaml",
+      "url": "https://usr.lmf.cnrs.fr/lpo/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Visualizing Rust's Vtables: How dyn Trait Works In Memory",
+      "url": "https://sofiabelen.github.io/projects/visualizing-rusts-vtables-how-dyn-trait-works-in-memory/",
+      "source": "Hacker News"
+    },
+    {
+      "title": ".gitignore Everything by Default",
+      "url": "https://packagemain.tech/p/gitignore-everything-by-default",
+      "source": "Hacker News"
+    },
+    {
+      "title": "A bizarre Commodore 64 peripheral, a mime, and some pretty bad ads",
+      "url": "https://buttondown.com/suchbadtechads/archive/spartan-and-the-mime/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "Terpstra Keyboard",
+      "url": "http://terpstrakeyboard.com/",
+      "source": "Hacker News"
+    },
+    {
+      "title": "US envoys meet Putin in Moscow for Ukraine talks",
+      "url": "https://www.bbc.co.uk/news/articles/cx2zqp46g8eo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Disruption at Port of Dover as masked 'stop the boats' protesters block roads",
+      "url": "https://www.bbc.co.uk/news/articles/cy8znyzgkjjo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Nigel Farage tells BBC he 'wasn't listening' during foreign donor talks filmed undercover",
+      "url": "https://www.bbc.co.uk/news/articles/c0qxgn7q1vdo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "US and Iran trade retaliatory attacks on ships as conflict flares",
+      "url": "https://www.bbc.co.uk/news/articles/cj64rrne643o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Aviation faces hotter, stormier skies – and passengers might have to accept more disruption",
+      "url": "https://www.bbc.co.uk/news/articles/cm274p8m88lo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Prince William to attend King Harald's funeral in Norway",
+      "url": "https://www.bbc.co.uk/news/articles/cp301rw6kvro?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Major disruption as grass fire halts all trains to Heathrow Airport",
+      "url": "https://www.bbc.co.uk/news/articles/cnvl1r1080go?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Chris Mason: Reform UK winded by donations row as insiders call for shift in approach",
+      "url": "https://www.bbc.co.uk/news/articles/cje87w9j342o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Trump's response is key as Argentina's Falklands demands get louder",
+      "url": "https://www.bbc.co.uk/news/articles/c980g0g7yyjo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Why the USS Lincoln turned up in Thailand looking so rusty",
+      "url": "https://www.bbc.co.uk/news/videos/c4gr9y1ny3xo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "The centuries-old problem of mapping the world",
+      "url": "https://www.bbc.co.uk/news/articles/cly5r60v4mro?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "The Grand Tour's new presenters: 'I hope we prove the critics wrong'",
+      "url": "https://www.bbc.co.uk/news/articles/c9865dyrjrwo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Katie Taylor crowns career in stylish Croke Park triumph",
+      "url": "https://www.bbc.co.uk/sport/boxing/articles/clyeg4n8l98o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Britain 'taxing itself to death' and 'Some Might Stray'",
+      "url": "https://www.bbc.co.uk/news/articles/c7v4781d9mmo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "TV presenter among 11 sentenced to death in Egypt drugs case",
+      "url": "https://www.bbc.co.uk/news/articles/c5y7gk9knnlo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Lindsay Clancy murder trial has divided US on whether she's victim or criminal",
+      "url": "https://www.bbc.co.uk/news/articles/cx2z0xnw2d6o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Jaguar Land Rover confirms planned job cuts",
+      "url": "https://www.bbc.co.uk/news/articles/c4gkr3p0ql7o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "King and Queen join Highland games fans at Braemar Gathering",
+      "url": "https://www.bbc.co.uk/news/articles/c89jpyk8n80o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Temperature exceeds 40C in parts of Europe  - is a September heatwave likely for UK?",
+      "url": "https://www.bbc.co.uk/weather/articles/cyvzq94g604o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "'My parents won't lend me £10k but helped my brother': When families play financial favourites",
+      "url": "https://www.bbc.co.uk/news/articles/cx279dml00ro?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Thieves steal 70,000 pints of Guinness in two lorries",
+      "url": "https://www.bbc.co.uk/news/articles/c5yjred1dleo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "US man struck by lightning describes 'horrific' experience",
+      "url": "https://www.bbc.co.uk/news/videos/cz7z93zde3po?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Prue Leith: 'You come into your own growing old'",
+      "url": "https://www.bbc.co.uk/news/articles/cy5zryk1lwyo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "BBC News app",
+      "url": "https://www.bbc.co.uk/news/10628994?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Has Pete Hegseth lost control of the Pentagon?",
+      "url": "https://www.bbc.co.uk/sounds/play/p0p7lymd?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Inside Ella Toone’s life on and off the pitch",
+      "url": "https://www.bbc.co.uk/iplayer/episode/m002x6jy?at_mid=i9BmYGpjPQ&amp;at_campaign=24_Hours_with_Ella_Toone&amp;at_medium=display_ad&amp;at_campaign_type=owned&amp;at_nation=NET&amp;at_audience_id=SS&amp;at_product=iplayer&amp;at_brand=m002x6jy&amp;at_ptr_name=bbc&amp;at_ptr_type=media&amp;at_format=image&amp;at_objective=consumption&amp;at_link_title=24_Hours_with_Ella_Toone&amp;at_bbc_team=BBC",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Imagine a world where no one has heard of The Beatles",
+      "url": "https://www.bbc.co.uk/iplayer/episode/m000xp0n?at_mid=TGGVkYg7qf&amp;at_campaign=Yesterday&amp;at_medium=display_ad&amp;at_campaign_type=owned&amp;at_nation=NET&amp;at_audience_id=SS&amp;at_product=iplayer&amp;at_brand=m000xp0n&amp;at_ptr_name=bbc&amp;at_ptr_type=media&amp;at_format=image&amp;at_objective=consumption&amp;at_link_title=Yesterday&amp;at_bbc_team=BBC&amp;at_creation=film",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Taylor crowns career in stylish Croke Park triumph",
+      "url": "https://www.bbc.co.uk/sport/boxing/articles/clyeg4n8l98o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Arsenal had more than 20 players on shortlist to capitalise on title win",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cz7z09v9pp1o?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "From chess to battle for pole, Gasly has Russell covered at Monza",
+      "url": "https://www.bbc.co.uk/sport/formula1/articles/c3wjdn80g2jo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "How Man Utd plan to compete at top with richer rivals",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cg49v57rxvgo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Zheng goes from 5-0 and match point down to victory",
+      "url": "https://www.bbc.co.uk/sport/tennis/articles/c3eq55xznvyo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Seven points from three games - are Hull on track to avoid relegation?",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cy8zd574yzyo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Glasner and Williams dispute VAR call over Forest handball",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c3v4537e60yo?at_medium=RSS&amp;at_campaign=rss",
+      "source": "BBC Top News"
+    },
+    {
+      "title": "Explore the globe in field recordings",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "iPhone Handoff will seamlessly share one number between two phones",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "CD sales are booming as physical media continues its resurgence",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "Fantasy Footballers’ Andy Holloway is a dedicated zero-inbox kinda guy",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "Content creators drop the ball",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "The weird and wonderful headphones of CanJam 2026",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "OpenAI admits to German wiki ‘incident’",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "Robotaxis enter their villain era",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "Audacity 4 is a complete revamp of the ‘world’s most popular’ audio editor",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "The White House is making arcade games racist",
+      "url": "",
+      "source": "The Verge"
+    },
+    {
+      "title": "Seattle Times and Newsday are the latest publications to sue OpenAI and Microsoft",
+      "url": "https://techcrunch.com/2026/09/05/seattle-times-and-newsday-are-the-latest-publications-to-sue-openai-and-microsoft/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Hikers rescued after using Google Gemini for planning",
+      "url": "https://techcrunch.com/2026/09/05/hikers-rescued-after-using-google-gemini-for-planning/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "OpenAI confirms ‘wiki incident,’ says it’s ‘working on a framework’ for more disclosure",
+      "url": "https://techcrunch.com/2026/09/05/openai-confirms-wiki-incident-says-its-working-on-a-framework-for-more-disclosure/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Clucky&#8217;s new alarm app wakes you up with a crowing rooster",
+      "url": "https://techcrunch.com/2026/09/05/cluckys-new-alarm-app-wakes-you-up-with-a-crowing-rooster/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Oura is going public, but these smart ring companies are coming for its crown",
+      "url": "https://techcrunch.com/2026/09/05/oura-is-going-public-but-these-smart-ring-companies-are-coming-for-its-crown/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "XDOF, just three months out of stealth, is in talks for a Series B at a $1.2B valuation",
+      "url": "https://techcrunch.com/2026/09/04/xdof-just-three-months-out-of-stealth-is-in-talks-for-a-series-b-at-a-1-2b-valuation/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "OpenAI&#8217;s rogue agents keep escaping, with no formal process to investigate them",
+      "url": "https://techcrunch.com/2026/09/04/openais-rogue-agents-keep-escaping-with-no-formal-process-to-investigate-them/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "AI compute provider Nscale is looking for $3.5B in pre-IPO financing",
+      "url": "https://techcrunch.com/2026/09/04/ai-compute-provider-nscale-is-looking-for-3-5b-in-pre-ipo-financing/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Judge blocks X rival from using Twitter name, but allows &#8216;Tweet&#8217; for now",
+      "url": "https://techcrunch.com/2026/09/04/judge-blocks-x-rival-from-using-twitter-name-but-allows-tweet-for-now/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "What will Apple&#8217;s John Ternus era look like?",
+      "url": "https://techcrunch.com/video/what-will-apples-john-ternus-era-look-like/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "No little kids allowed, and other new info about Tesla&#8217;s Cybercab",
+      "url": "https://techcrunch.com/2026/09/04/no-little-kids-allowed-and-other-new-info-about-teslas-cybercab/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Another swarm of OpenAI agents reached the open internet without the frontier lab&#8217;s knowledge",
+      "url": "https://techcrunch.com/2026/09/04/another-swarm-of-openai-agents-reached-the-open-internet-without-the-frontier-labs-knowledge/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "CD sales are making an unexpected comeback amid a retro tech boom",
+      "url": "https://techcrunch.com/2026/09/04/cd-sales-are-making-an-unexpected-comeback-amid-a-retro-tech-boom/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Krafton doubles down on India with another $250M bet beyond gaming",
+      "url": "https://techcrunch.com/2026/09/04/krafton-doubles-down-on-india-with-another-250m-bet-beyond-gaming/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Google&#8217;s Gemini Spark can now manage your Google Photos library",
+      "url": "https://techcrunch.com/2026/09/04/googles-gemini-spark-can-now-manage-your-google-photos-library/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Less than 24 hours to apply for your TechCrunch Disrupt 2026 Side Event",
+      "url": "https://techcrunch.com/2026/09/04/less-than-24-hours-to-apply-for-your-techcrunch-disrupt-2026-side-event/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "US military disabled ad tracking on troops&#8217; devices following reports of targeted attacks",
+      "url": "https://techcrunch.com/2026/09/04/us-military-disabled-ad-tracking-on-troops-devices-following-reports-of-targeted-attacks/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Feds launch investigation into Tesla&#8217;s Cybercab deployment",
+      "url": "https://techcrunch.com/2026/09/04/feds-launch-investigation-into-teslas-cybercab-deployment/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "The sameness problem behind those unappetizing AI-generated menus",
+      "url": "https://techcrunch.com/2026/09/03/the-sameness-problem-behind-those-unappetizing-ai-generated-menus/",
+      "source": "TechCrunch"
+    },
+    {
+      "title": "Crusoe reportedly raises $3B at a  $30B valuation",
+      "url": "https://techcrunch.com/2026/09/03/crusoe-reportedly-raises-3b-at-a-30b-valuation/",
+      "source": "TechCrunch"
+    }
+  ]
+}
