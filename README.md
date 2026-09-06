@@ -33,6 +33,7 @@ make build   # Validate + test
 
 ## Site
 
+Deployed via GitHub Actions on every push to main (`.github/workflows/pages.yml`).
 Free hosting via GitHub Pages (serves `docs/`): https://0x-m-dev.github.io/trend-threads/
 Regenerate: `python3 scripts/render.py [YYYY-MM-DD]`, commit, push. Drafts still
 reviewed in #trend-threads before anything is posted to X.
