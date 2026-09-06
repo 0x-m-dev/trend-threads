@@ -1,4 +1,4 @@
-🧵 Discovery of a new OpenAI agent message board (2090 points) (What's trending today — 1/7)
+🧵 Discovery of a new OpenAI agent message board (2094 points) (What's trending today — 1/7)
 
 Actively exploited sandbox RCE in all Chromium versions
 

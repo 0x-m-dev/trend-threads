@@ -21,66 +21,62 @@ import draft
 # Scrape tests
 # ---------------------------------------------------------------------------
 
-class TestScrapeRSS:
-    """Test RSS feed fetching."""
-
-    def test_hn_rss_parsing(self):
-        items = scrape.fetch_rss_feed("Hacker News", "https://hnrss.org/frontpage")
-        assert len(items) >= 5, f"Expected ≥5 HN items, got {len(items)}"
-        for item in items:
-            assert "title" in item
-            assert "source" in item
-            assert item["source"] == "Hacker News"
-            assert len(item["title"]) >= 10
-
-    def test_bbc_rss_parsing(self):
-        items = scrape.fetch_rss_feed("BBC", "http://feeds.bbci.co.uk/news/rss.xml")
-        assert len(items) >= 5, f"Expected ≥5 BBC items, got {len(items)}"
-        for item in items:
-            assert len(item["title"]) >= 10
-
-    def test_techcrunch_rss_parsing(self):
-        items = scrape.fetch_rss_feed("TechCrunch", "https://techcrunch.com/feed/")
-        assert len(items) >= 5, f"Expected ≥5 TechCrunch items, got {len(items)}"
-        for item in items:
-            assert item["source"] == "TechCrunch"
+# ---------------------------------------------------------------------------
+# Scrape tests (mocked — no network)
+# ---------------------------------------------------------------------------
+from unittest.mock import patch
 
 
-class TestScrapeHN:
-    """Test Hacker News top stories."""
-
-    def test_hn_fetch(self):
-        items = scrape.fetch_hn_top()
-        assert isinstance(items, list)
-        for item in items:
-            assert "title" in item
-            assert item["source"] == "Hacker News"
-            assert "score" in item
-            assert item["score"] >= scrape.HN_MIN_SCORE
+def _reddit_payload():
+    return {"data": {"children": [
+        {"data": {"title": f"Post {i}", "permalink": f"/r/x/comments/{i}",
+                  "ups": 100 + i, "num_comments": 10 + i}} for i in range(3)]}}
 
 
-class TestScrapeCombined:
-    """Test full scrape output."""
+class TestFetchReddit:
+    def test_shape(self):
+        with patch.object(scrape, "get_json", return_value=_reddit_payload()):
+            items = scrape.fetch_reddit()
+        assert len(items) == 3
+        for it in items:
+            assert {"source", "title", "url"} <= set(it)
+            assert it["source"] == "reddit"
+            assert it["title"] == it["title"].strip() and it["title"]
 
-    def test_output_format(self, tmp_path: Path):
-        """scrape() returns correct dict structure."""
-        orig_dir = Path(__file__).parent.parent / "data" / date.today().isoformat()
-        # Temporarily override OUTPUT_DIR for test
-        original_output = scrape.OUTPUT_DIR
-        scrape.OUTPUT_DIR = tmp_path / "test"
 
-        try:
-            result = scrape.scrape()
-            assert "date" in result
-            assert "sources" in result
-            assert "source_counts" in result
-            assert "total_trends" in result
-            assert "trends" in result
-            assert isinstance(result["trends"], list)
-            assert result["total_trends"] >= 10
-            assert len(result["sources"]) >= 2
-        finally:
-            scrape.OUTPUT_DIR = original_output
+class TestFetchHN:
+    def test_shape(self):
+        def fake(url, timeout=15):
+            if url == scrape.SOURCES["hackernews_ids"]:
+                return [11, 22]
+            return {"title": "HN story", "url": "https://x.test", "score": 42}
+        with patch.object(scrape, "get_json", side_effect=fake):
+            items = scrape.fetch_hn()
+        assert len(items) == 2
+        assert all(it["source"] == "hacker_news" and it["title"] for it in items)
+
+
+RSS_SAMPLE = """<?xml version="1.0"?><rss><channel>
+<item><title>Alpha news story here</title><link>https://x.test/a</link></item>
+<item><title>Beta news story here</title><link>https://x.test/b</link></item>
+</channel></rss>"""
+
+
+class TestFetchRSS:
+    def test_parses_items(self):
+        class Resp:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def read(self):
+                return RSS_SAMPLE.encode()
+        with patch.object(scrape.urllib.request, "urlopen", return_value=Resp()):
+            items = scrape.fetch_rss()
+        assert len(items) >= 2
+        assert all(it["source"] == "news" and it["title"] for it in items)
 
 
 class TestDraft:
