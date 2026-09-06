@@ -25,6 +25,11 @@ make build   # Validate + test
 - `scripts/deliver.py` — Format draft as Discord-ready review message
 - `tests/test_trend_threads.py` — Tests for all scripts
 - `tools/check_pii.sh` — PII/secret gate (pre-commit + pre-push)
+- `tools/check_readme_push.sh` — README freshness gate (pre-push)
 - `tools/install-hooks.sh` — Install git hooks
 - `data/<date>/trends.json` — Raw scraped trends
 - `data/<date>/thread.md` — Drafted thread for the day
+
+## Pipeline Output
+
+Today's run: ✅ 85 trends from 4 sources (HN, BBC, The Verge, TechCrunch)
