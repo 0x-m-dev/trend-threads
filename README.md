@@ -1,6 +1,8 @@
 # Trend Threads
 
-Hermes-managed project. Read `SPEC.md`, `PROJECT.yaml`, and `AGENTS.md` before making significant changes.
+Hermes-managed project. Read `SPEC.md`, `PROJECT.yaml`, `PROJECT_STATE.md`, and
+`AGENTS.md` before making significant changes. Keep `PROJECT_STATE.md` current
+so a fresh chat can resume without replaying old conversations.
 
 ## Pipeline (daily cron)
 

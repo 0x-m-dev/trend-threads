@@ -2,7 +2,10 @@
 
 ## Required context
 
-Read `SPEC.md`, `PROJECT.yaml`, and this file before significant work.
+Read `SPEC.md`, `PROJECT.yaml`, `PROJECT_STATE.md`, and this file before
+significant work. At the end of meaningful work, update `PROJECT_STATE.md`
+with verified state, decisions, next actions, blockers, and timestamp. Keep it
+factual and under 100 lines so fresh chats can resume without replaying history.
 
 ## Definition of done
 
