@@ -49,7 +49,16 @@ done
 # shellcheck disable=SC2086
 FILES_TRIMMED=$(echo $FILES)
 [ -z "$FILES_TRIMMED" ] && { echo "readme check: nothing new to push"; exit 0; }
-if echo "$FILES_TRIMMED" | tr ' ' '\n' | grep -qi '^readme'; then
+# Exclude gitignored files (files that were previously tracked but now ignored)
+FILES_CLEAN=""
+for f in $FILES_TRIMMED; do
+  if ! git check-ignore "$f" >/dev/null 2>&1; then
+    FILES_CLEAN="$FILES_CLEAN $f"
+  fi
+done
+FILES_CLEAN=$(echo "$FILES_CLEAN" | xargs)
+[ -z "$FILES_CLEAN" ] && { echo "readme check: nothing new to push"; exit 0; }
+if echo "$FILES_CLEAN" | tr ' ' '\n' | grep -qi '^readme'; then
   echo "readme check: README updated in this push"
   exit 0
 fi
