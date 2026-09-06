@@ -6,8 +6,9 @@ Hermes-managed project. Read `SPEC.md`, `PROJECT.yaml`, and `AGENTS.md` before m
 
 ```bash
 python3 scripts/scrape.py   # → data/<date>/trends.json (≥10 trends from ≥2 sources)
-python3 scripts/draft.py    # → data/<date>/thread.md (5–7 tweet draft)
-python3 scripts/deliver.py  # → prints review message to stdout (for Hermes cron agent)
+python3 scripts/draft.py    # → data/<date>/icumi.md + icumi.json (single ICUMI post with X refs)
+python3 scripts/deliver.py  # → prints ICUMI review message to stdout (for Hermes cron agent)
+python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages)
 ```
 
 ## Commands
@@ -20,16 +21,25 @@ make build   # Validate + test
 
 ## Structure
 
-- `scripts/scrape.py` — Multi-source trend fetcher (HN, RSS feeds, Google Trends)
-- `scripts/draft.py` — Cluster trends → 5-7 tweet thread draft
-- `scripts/deliver.py` — Format draft as Discord-ready review message
-- `scripts/render.py` — Render day's draft + topics to `docs/` (GitHub Pages)
+- `scripts/scrape.py` — Multi-source trend fetcher (HN, Reddit, RSS, Google Trends) + X tweet lookup via firecrawl
+- `scripts/draft.py` — Picks top topic as ICUMI highlight, cross-refs X tweets, writes single-sweet post
+- `scripts/deliver.py` — Formats ICUMI post as Discord-ready review message
+- `scripts/render.py` — Renders ICUMI JSON to styled HTML docs (GitHub Pages)
 - `tests/test_trend_threads.py` — Tests for all scripts
 - `tools/check_pii.sh` — PII/secret gate (pre-commit + pre-push)
 - `tools/check_readme_push.sh` — README freshness gate (pre-push)
 - `tools/install-hooks.sh` — Install git hooks
 - `data/<date>/trends.json` — Raw scraped trends
-- `data/<date>/thread.md` — Drafted thread for the day
+- `data/<date>/icumi.md` — ICUMI post for the day
+- `data/<date>/icumi.json` — Structured ICUMI data (highlight, related, X refs)
+
+## ICUMI Format
+
+Each day produces a single "In Case You Missed It" post with:
+- **🔥 Highlight** — top-scoring trend with points and source link
+- **📌 Also trending** — 4 diverse related topics with HN points and URLs
+- **🐦 On X** — top X tweet links per topic (via firecrawl search)
+- Archive link to full history
 
 ## Site
 
@@ -40,5 +50,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ 14 topics from 2 sources (HN + news RSS; Reddit blocks
-bots, Google Trends best-effort).
+Last verified run: ✅ ICUMI post drafted with X cross-refs (QBittorrent 1042 pts highlight, 3 topics with X tweet links)

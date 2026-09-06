@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 """
-Trend Threads — Draft thread from today's trends.
+Trend Threads — ICUMI-style TLDR posts with cross-refs.
 
-Picks the top 3-4 trending topics and crafts a 5-7 tweet thread draft
-(hook first, ≤280 chars/tweet, ends with question/CTA).
+Instead of long threads, produce one "In Case You Missed It" post per day
+with a single "sweet" (highlight) topic, related HN links, and X tweet refs.
 
-Outputs to: data/<date>/thread.md
-Acceptance: one full cron tick → draft thread, ≤280 chars/tweet.
+Output: data/<date>/icumi.md (single post) + data/<date>/icumi.json (structured)
 """
 
 from __future__ import annotations
@@ -19,120 +18,180 @@ from pathlib import Path
 
 OUTPUT_DIR = Path(__file__).parent.parent / "data" / date.today().isoformat()
 TRENDS_FILE = OUTPUT_DIR / "trends.json"
-THREAD_FILE = OUTPUT_DIR / "thread.md"
+ICUMI_FILE = OUTPUT_DIR / "icumi.md"
+ICUMI_JSON = OUTPUT_DIR / "icumi.json"
 
-# --- Topic clustering helpers ---
+
+# --- Topic helpers ---
 
 def normalize_title(title: str) -> str:
-    """Lowercase, strip common prefixes, collapse whitespace."""
-    t = re.sub(r'<!\[CDATA\[|\]\]>', '', title)
-    t = re.sub(r'<[^>]+>', '', t)
-    t = re.sub(r'&#8217;', "'", t)  # HTML entities
-    t = re.sub(r'[–—]', ' - ', t)
-    t = ' '.join(t.split())
-    return t.strip().lower()
-
-
-def cluster_topics(trends: list[dict], max_clusters: int = 4) -> list[list[dict]]:
-    """Group topics by shared keywords — returns list of clusters."""
-    clusters: list[list[dict]] = []
-    used: set[int] = set()
-
-    # Sort by score descending (HN items have score, others get 0)
-    scored = sorted(trends, key=lambda t: t.get("score", 0), reverse=True)
-
-    for i, item in enumerate(scored):
-        if i in used:
-            continue
-        cluster = [item]
-        used.add(i)
-        keywords = set(re.findall(r'\b\w{4,}\b', normalize_title(item["title"])))
-
-        for j, other in enumerate(scored):
-            if j in used:
-                continue
-            other_keys = set(re.findall(r'\b\w{4,}\b', normalize_title(other["title"])))
-            overlap = keywords & other_keys
-            # Require at least 2 shared keywords AND one keyword present in both titles
-            if len(overlap) >= 2:
-                cluster.append(other)
-                used.add(j)
-
-        if len(cluster) > 1:
-            clusters.append(cluster)
-        else:
-            clusters.append(cluster)
-
-        if len(clusters) >= max_clusters:
-            break
-
-    # Drop clusters with only 1 item if we have more clusters available
-    if len(clusters) > max_clusters:
-        singletons = [c for c in clusters if len(c) == 1]
-        multi = [c for c in clusters if len(c) > 1]
-        clusters = multi + singletons[:max_clusters - len(multi)]
-
-    return clusters[:max_clusters]
-
-
-# --- Thread drafting ---
-
-def format_tweet(text: str) -> str:
-    """Normalize text for tweet format — clean up artifacts."""
-    t = text
-    t = re.sub(r'<!\[CDATA\[|\]\]>', '', t)
+    """Lowercase, strip HTML/CDATA artifacts, collapse whitespace."""
+    t = re.sub(r'<!\[\[CDATA\|\]\]>', '', title)
     t = re.sub(r'<[^>]+>', '', t)
     t = re.sub(r'&#8217;', "'", t)
     t = re.sub(r'&#8221;', '"', t)
     t = re.sub(r'&#8216;', "'", t)
-    t = ' '.join(t.split())
-    return t.strip()
+    t = re.sub(r'[–—]', ' - ', t)
+    return ' '.join(t.split()).strip()
 
 
-def draft_thread(clusters: list[list[dict]]) -> str:
-    """Draft a 5-7 tweet thread from topic clusters."""
-    tweets = []
+def flatten_trends(data: dict) -> list[dict]:
+    """Flatten scrape.py's per-source dict into a single sorted list."""
+    flat = []
+    for source, items in data.items():
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            entry = {
+                "source": source,
+                "title": item.get("title", ""),
+                "url": item.get("url", ""),
+                "score": item.get("points") or item.get("ups") or 0,
+            }
+            flat.append(entry)
+    return sorted(flat, key=lambda t: t.get("score", 0), reverse=True)
 
-    # Tweet 1: Hook — pick the most interesting cluster
-    best = clusters[0]
-    hook_topic = best[0]["title"]
-    hook_source = best[0].get("source", "")
-    hook_score = best[0].get("score", "")
-    hook_extra = f" ({hook_score} points)" if hook_score else f" — {hook_source}"
-    tweets.append(f"🧵 {hook_topic}{hook_extra} (What's trending today — 1/7)")
 
-    # Tweet 2: Second cluster summary
-    if len(clusters) > 1:
-        topic2 = clusters[1][0]["title"]
-        tweets.append(f"\n{format_tweet(topic2)}")
-        tweets[-1] += "\n\n(2/7)"
+def pick_highlight(trends: list[dict]) -> dict:
+    """Pick the #1 highest-scored topic as the ICUMI highlight."""
+    return trends[0] if trends else {}
 
-    # Tweet 3: Third cluster (or more from top cluster)
-    if len(clusters) > 2:
-        topic3 = clusters[2][0]["title"]
-        tweets.append(f"\n{format_tweet(topic3)}")
-        tweets[-1] += "\n\n(3/7)"
-    elif len(best) > 1:
-        topic_sub = format_tweet(best[1]["title"])
-        tweets.append(f"\nAlso from {best[0].get('source', 'top source')}:\n{topic_sub}")
-        tweets[-1] += "\n\n(3/7)"
 
-    # Tweet 4: Roundup of remaining interesting items
-    remaining = []
-    for cluster in clusters[2:] if len(clusters) > 2 else [best[1:]]:
-        for item in cluster[:1]:
-            t = format_tweet(item["title"])
-            if len(t) > 5:
-                remaining.append(t)
+def pick_related(trends: list[dict], count: int = 4, exclude_idx: int = 0) -> list[dict]:
+    """Pick diverse related topics (not the highlight)."""
+    selected = []
+    used_titles = set()
+    highlight = trends[exclude_idx]
+    highlight_keys = set(re.findall(r'\b\w{4,}\b', normalize_title(highlight["title"]))) if highlight else set()
 
-    if remaining:
-        tweets.append(f"\n" + "\n".join(f"• {r}" for r in remaining[:3]))
-        tweets[-1] += "\n\n(4/7)"
+    for item in trends:
+        if len(selected) >= count:
+            break
+        if item is trends[exclude_idx]:
+            continue
+        title = normalize_title(item["title"])
+        keys = set(re.findall(r'\b\w{4,}\b', title))
+        # Avoid heavy overlap with highlight
+        if keys & highlight_keys:
+            continue
+        if title.lower() not in used_titles and len(selected) < count:
+            selected.append(item)
+            used_titles.add(title.lower())
+    return selected
 
-    # Tweet 5: CTA
-    tweets.append("\nWhat are you watching today? Drop links below 👇\n\n(5/7)")
 
-    return "\n".join(tweets).strip()
+def extract_keywords(title: str, count: int = 3) -> list[str]:
+    """Extract 2-4 word keywords from title for X search."""
+    words = re.findall(r'\b\w{3,}\b', normalize_title(title))
+    # Pick longest meaningful words, up to count
+    picked = []
+    for w in sorted(words, key=len, reverse=True):
+        if len(w) >= 3 and w.lower() not in {"https", "http", "this", "that", "with", "from"}:
+            picked.append(w)
+        if len(picked) >= count:
+            break
+    return picked[:count]
+
+
+# --- ICUMI drafting ---
+
+def format_icumi_text(title: str) -> str:
+    """Clean title for use in ICUMI."""
+    return format_tweet(title)
+
+
+def format_tweet(text: str) -> str:
+    """Normalize text — clean artifacts."""
+    t = re.sub(r'<!\[\[CDATA\|\]\]>', '', text)
+    t = re.sub(r'<[^>]+>', '', t)
+    t = re.sub(r'&#8217;', "'", t)
+    t = re.sub(r'&#8221;', '"', t)
+    t = re.sub(r'&#8216;', "'", t)
+    return ' '.join(t.split()).strip()
+
+
+def build_icumi(highlight: dict, related: list[dict], x_refs: dict[str, list[dict]]) -> str:
+    """Build a single ICUMI-style post."""
+    lines = []
+
+    if not highlight:
+        return "📡 No trends found today. Run scrape.py first."
+
+    # Title / header
+    highlight_title = format_icumi_text(highlight["title"])
+    score = highlight.get("score", "")
+    source = highlight.get("source", "")
+
+    if score and score > 0:
+        extra = f" ({score} pts)"
+    elif source:
+        extra = f" — {source}"
+    else:
+        extra = ""
+
+    # ICUMI header
+    lines.append(f"📡 In Case You Missed It")
+    lines.append(f"📅 {date.today().strftime('%A, %B %d, %Y')}")
+    lines.append("")
+
+    # Highlight (single sweet)
+    lines.append(f"🔥 **{highlight_title}{extra}**")
+
+    # HN link if available
+    if highlight.get("url"):
+        lines.append(f"   📎 {highlight['url']}")
+    lines.append("")
+
+    # Related topics with links
+    if related:
+        lines.append("📌 Also trending:")
+        for item in related:
+            title = format_icumi_text(item["title"])
+            pts = item.get("points") or item.get("ups") or ""
+            url = item.get("url", "")
+            if pts:
+                lines.append(f"  • {title} ({pts} pts)")
+            else:
+                lines.append(f"  • {title}")
+            if url:
+                lines.append(f"    {url}")
+        lines.append("")
+
+    # X tweet cross-refs
+    all_topics = [highlight["title"]] + [r["title"] for r in related]
+    topic_x_refs = {}
+    for topic in all_topics:
+        keyword = topic.strip()[:60]
+        if keyword in x_refs and x_refs[keyword]:
+            topic_x_refs[keyword] = x_refs[keyword]
+
+    if topic_x_refs:
+        lines.append("🐦 On X:")
+        for topic, tweets in topic_x_refs.items():
+            lines.append(f"  **{topic}:**")
+            for tw in tweets[:3]:
+                lines.append(f"    <{tw['url']}>")
+        lines.append("")
+
+    # Source summary
+    lines.append("---")
+    lines.append(f"📊 Sources: HN · Reddit · News · Google Trends")
+    lines.append(f"🔗 Full archive: https://0x-m-dev.github.io/trend-threads/")
+
+    return "\n".join(lines).strip()
+
+
+def build_icumi_json(highlight: dict, related: list[dict], x_refs: dict[str, list[dict]]) -> dict:
+    """Structured JSON for render.py to consume."""
+    return {
+        "date": date.today().isoformat(),
+        "highlight": highlight,
+        "related": related,
+        "x_refs": {k: v for k, v in list(x_refs.items())[:3]},  # limit for size
+        "total_trends": 1 + len(related),
+    }
 
 
 # --- Main ---
@@ -145,35 +204,39 @@ def main() -> int:
     with open(TRENDS_FILE) as f:
         data = json.load(f)
 
-    trends = data.get("trends", [])
-    if len(trends) < 5:
-        print(f"ERROR: Only {len(trends)} trends, need ≥5 to draft.", file=sys.stderr)
+    trends = flatten_trends(data)
+    if len(trends) < 3:
+        print(f"ERROR: Only {len(trends)} trends, need ≥3 to draft ICUMI.", file=sys.stderr)
         return 1
 
-    clusters = cluster_topics(trends, max_clusters=4)
-    thread = draft_thread(clusters)
+    # Pick highlight (top) + related
+    highlight = pick_highlight(trends)
+    related = pick_related(trends, count=4)
 
-    # Validate: all tweets ≤280 chars
-    tweet_lines = thread.split("\n\n")
-    valid = True
-    for line in tweet_lines:
-        clean = line.strip()
-        # Strip numbering suffix like "(1/7)"
-        clean_no_num = re.sub(r'\s*\(\d+/\d+\)$', '', clean)
-        if len(clean_no_num) > 280:
-            print(f"WARNING: Tweet exceeds 280 chars ({len(clean_no_num)}): {clean_no_num[:60]}...")
-            valid = False
+    # Fetch X tweet refs for highlight + related topics
+    x_topics = [highlight["title"]] + [r["title"] for r in related]
+    print(f"Fetching X refs for {len(x_topics)} topics...")
+    x_refs = {}
+    from scrape import fetch_x_tweets_for_topics  # dynamic import to avoid circular
+    try:
+        x_refs = fetch_x_tweets_for_topics(x_topics)
+        print(f"Found X refs for {len(x_refs)} topics")
+    except Exception as e:
+        print(f"X refs skipped: {e}")
+
+    # Build ICUMI post
+    icumi_text = build_icumi(highlight, related, x_refs)
+    icumi_data = build_icumi_json(highlight, related, x_refs)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    with open(THREAD_FILE, "w") as f:
-        f.write(thread)
+    (ICUMI_FILE).write_text(icumi_text)
+    (ICUMI_JSON).write_text(json.dumps(icumi_data, indent=2))
 
-    print(f"Thread drafted — {THREAD_FILE}")
-    print(f"  Clusters: {len(clusters)} topics, {len(tweet_lines)} tweets")
-    if valid:
-        print("  ✓ All tweets ≤280 chars")
-    else:
-        print("  ⚠ Some tweets need trimming", file=sys.stderr)
+    print(f"ICUMI post drafted — {ICUMI_FILE}")
+    print(f"  Highlight: {highlight['title'][:60]}")
+    print(f"  Related: {len(related)} topics")
+    print(f"  X refs: {sum(len(v) for v in x_refs.values())} tweets")
+    print(f"  JSON: {ICUMI_JSON}")
 
     return 0
 

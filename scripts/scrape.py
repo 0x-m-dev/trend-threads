@@ -100,6 +100,63 @@ def fetch_gtrends():
     return out
 
 
+def fetch_x_tweets(topic: str, limit: int = 3) -> list[dict]:
+    """Search X (Twitter) for recent top tweets about a topic via web search.
+
+    Firecrawl CLI outputs lines like:
+      URL: https://x.com/...
+      text about the tweet...
+    We extract URLs from 'URL:' prefixed lines or bare URLs.
+    """
+    out = []
+    try:
+        # Use broader query for better results
+        query = f"{topic} site:x.com OR site:twitter.com"
+        r = subprocess.run(["npx", "-y", "firecrawl-cli@latest", "search",
+                            query, "--limit", str(limit * 2)],
+                           capture_output=True, text=True, timeout=45)
+        if r.returncode == 0:
+            for line in r.stdout.splitlines():
+                line = line.strip().strip("'\"")
+                url = ""
+                # Try 'URL: https://...' format first
+                if line.startswith("URL:"):
+                    candidate = line[4:].strip()
+                elif line.startswith("http"):
+                    candidate = line
+                else:
+                    continue
+                # Filter for x.com/twitter.com URLs
+                if (
+                    ("x.com/" in candidate or "twitter.com/" in candidate)
+                    and "status" in candidate
+                    and not candidate.startswith("[[")
+                ):
+                    # Strip any markdown link wrapper [[url](url)] -> url
+                    cleaned = candidate.strip("[]").replace(")](", ")").replace("(", "").rstrip(")")
+                    if cleaned.startswith("http"):
+                        url = cleaned
+                    else:
+                        url = candidate
+                    out.append({"source": "x", "url": url, "title": topic})
+                    if len(out) >= limit:
+                        break
+    except Exception as e:
+        print(f"x search skipped for '{topic}': {e}")
+    return out
+
+
+def fetch_x_tweets_for_topics(topics: list[str]) -> dict[str, list[dict]]:
+    """Fetch top X tweets for each topic keyword. Returns {topic: [tweets]}."""
+    result = {}
+    for topic in topics:
+        clean = topic.strip()[:60]
+        tweets = fetch_x_tweets(clean, limit=2)
+        if tweets:
+            result[clean] = tweets
+    return result
+
+
 def main():
     day = sys.argv[1] if len(sys.argv) > 1 else date.today().isoformat()
     from pathlib import Path
