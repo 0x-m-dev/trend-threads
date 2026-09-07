@@ -19,14 +19,15 @@ daily trend data → draft threads ready to post.
 ## Pipeline (daily, via `hermes cron`)
 1. **Scrape** — Reddit r/hot, HN topstories, news RSS (+ Google Trends via
    `npx -y firecrawl-cli@latest`). Save raw JSON to `data/<date>/trends.json`.
-2. **Draft** — cron agent picks 1 topic cluster, writes a 5–7 tweet draft
-   (hook first, ≤280 chars/tweet, ends with question/CTA) to
-   `data/<date>/thread.md`.
+2. **Draft** — pick 1 highlight + related links, fetch article excerpts,
+   write 1–2 sentence summaries and a copy-ready mock X post (long
+   summarization + ≤280-char hook) to `data/<date>/icumi.md`.
 3. **Review** — draft posts to Discord for approval. Human posts to X manually.
 4. **Log** — trends + drafts + posted/not-posted status stay in `data/`.
 
 ## Scope (v1)
 - `scripts/scrape.py` — multi-source fetch, JSON dump. Pure stdlib + requests.
+- `scripts/summarize.py` — article excerpts + mock X post builder.
 - Cron job (daily morning) running the scrape; agent drafts + delivers.
 - Discord delivery of drafts; `data/` log layout.
 - SPEC.md, PROJECT.yaml, AGENTS.md, README updated every push (hook-gated).
@@ -38,8 +39,8 @@ daily trend data → draft threads ready to post.
 ## Acceptance
 1. `python3 scripts/scrape.py` → `data/<today>/trends.json` with ≥10 topics
    from ≥2 sources, exit 0.
-2. One full cron tick → draft thread in `#specs` (or designated review
-   channel), under 280 chars/tweet.
+2. One full cron tick → ICYMI draft in `#trend-threads` with article
+   summaries and a copy-ready mock X post (long + ≤280-char hook).
 3. `bash tools/check_pii.sh --all` clean; README touched; pushed to
    `0x-m-dev/trend-threads` as `0x-m-dev`; `#deploy-log` ship post sent.
 4. No secrets, no hardcoded channel IDs (registry via shared helper),

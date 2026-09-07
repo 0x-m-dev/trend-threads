@@ -20,13 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Render today's page
-        run: python3 scripts/render.py
-      - name: Upload docs/ as artifact
+      - name: Upload committed docs/ as artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs

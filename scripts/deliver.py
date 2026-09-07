@@ -49,6 +49,12 @@ def main() -> int:
     # Read the text version if it exists (nicer Discord formatting)
     if ICUMI_TEXT_FILE.exists():
         icumi_text = ICUMI_TEXT_FILE.read_text().strip()
+        mock = icumi_data.get("mock_post") or {}
+        if mock.get("text") and "Mock post" not in icumi_text:
+            icumi_text += (
+                "\n\n🐦 Mock post (copy to X):\n\n"
+                + mock["text"]
+            )
         print(icumi_text)
         return 0
 
@@ -78,6 +84,17 @@ def main() -> int:
             if url:
                 line += f"\n  🔗 {url}"
             lines.append(line)
+
+    mock = icumi_data.get("mock_post") or {}
+    if mock.get("text"):
+        lines.append("")
+        lines.append("🐦 **Mock post (copy to X):**")
+        lines.append("```")
+        lines.append(mock["text"])
+        lines.append("```")
+        if mock.get("short"):
+            lines.append(f"280-char hook ({mock.get('short_chars', len(mock['short']))} chars):")
+            lines.append(f"```\n{mock['short']}\n```")
 
     if x_refs:
         lines.append("")

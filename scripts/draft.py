@@ -16,6 +16,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from summarize import build_mock_post, summarize_items
+
 OUTPUT_DIR = Path(__file__).parent.parent / "data" / date.today().isoformat()
 TRENDS_FILE = OUTPUT_DIR / "trends.json"
 ICUMI_FILE = OUTPUT_DIR / "icumi.md"
@@ -112,7 +115,13 @@ def format_tweet(text: str) -> str:
     return ' '.join(t.split()).strip()
 
 
-def build_icumi(highlight: dict, related: list[dict], x_refs: dict[str, list[dict]]) -> str:
+def build_icumi(
+    highlight: dict,
+    related: list[dict],
+    x_refs: dict[str, list[dict]],
+    mock_post: dict | None = None,
+    summaries: list[dict] | None = None,
+) -> str:
     """Build a single ICUMI-style post."""
     lines = []
 
@@ -159,6 +168,26 @@ def build_icumi(highlight: dict, related: list[dict], x_refs: dict[str, list[dic
                 lines.append(f"    {url}")
         lines.append("")
 
+    if summaries:
+        lines.append("🧠 Article summaries:")
+        for row in summaries:
+            title = format_icumi_text(row.get("title", ""))
+            summary = (row.get("summary") or "").strip()
+            if title and summary and summary != title:
+                lines.append(f"  • {title}")
+                lines.append(f"    {summary}")
+        lines.append("")
+
+    if mock_post and mock_post.get("text"):
+        lines.append("🐦 Mock post (copy to X):")
+        lines.append("")
+        lines.append(mock_post["text"])
+        lines.append("")
+        if mock_post.get("short"):
+            lines.append(f"280-char hook ({mock_post.get('short_chars', len(mock_post['short']))} chars):")
+            lines.append(mock_post["short"])
+            lines.append("")
+
     # X tweet cross-refs
     all_topics = [highlight["title"]] + [r["title"] for r in related]
     topic_x_refs = {}
@@ -183,13 +212,21 @@ def build_icumi(highlight: dict, related: list[dict], x_refs: dict[str, list[dic
     return "\n".join(lines).strip()
 
 
-def build_icumi_json(highlight: dict, related: list[dict], x_refs: dict[str, list[dict]]) -> dict:
+def build_icumi_json(
+    highlight: dict,
+    related: list[dict],
+    x_refs: dict[str, list[dict]],
+    mock_post: dict | None = None,
+    summaries: list[dict] | None = None,
+) -> dict:
     """Structured JSON for render.py to consume."""
     return {
         "date": date.today().isoformat(),
         "highlight": highlight,
         "related": related,
         "x_refs": {k: v for k, v in list(x_refs.items())[:3]},  # limit for size
+        "summaries": summaries or [],
+        "mock_post": mock_post or {},
         "total_trends": 1 + len(related),
     }
 
@@ -224,9 +261,15 @@ def main() -> int:
     except Exception as e:
         print(f"X refs skipped: {e}")
 
+    print("Summarizing articles...")
+    summaries = summarize_items([highlight, *related])
+    mock_post = build_mock_post(highlight, related, summaries)
+
     # Build ICUMI post
-    icumi_text = build_icumi(highlight, related, x_refs)
-    icumi_data = build_icumi_json(highlight, related, x_refs)
+    icumi_text = build_icumi(highlight, related, x_refs, mock_post=mock_post, summaries=summaries)
+    icumi_data = build_icumi_json(
+        highlight, related, x_refs, mock_post=mock_post, summaries=summaries
+    )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     (ICUMI_FILE).write_text(icumi_text)

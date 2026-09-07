@@ -71,6 +71,25 @@ def icumi_card(data: dict) -> str:
             cards += li
         cards += '</ul></section>'
 
+    mock = data.get("mock_post") or {}
+    if mock.get("text"):
+        cards += mock_post_card(mock, date_str)
+
+    summaries = data.get("summaries") or []
+    if summaries:
+        cards += '<section class="summaries"><h2>🧠 Article summaries</h2>'
+        for row in summaries:
+            title = html.escape(row.get("title", ""))
+            summary = html.escape(row.get("summary", ""))
+            url = row.get("url", "")
+            if not title or not summary:
+                continue
+            cards += f'<article class="summary"><h3>{title}</h3><p>{summary}</p>'
+            if url:
+                cards += f'<p class="link"><a href="{html.escape(url)}" target="_blank">Read →</a></p>'
+            cards += '</article>'
+        cards += '</section>'
+
     # X refs
     if x_refs:
         cards += '<section class="x-refs"><h2>🐦 On X</h2>'
@@ -82,6 +101,38 @@ def icumi_card(data: dict) -> str:
         cards += '</section>'
 
     return cards
+
+
+def mock_post_card(mock: dict, day: str = "") -> str:
+    """X-style mock post so the summarization is copy-ready."""
+    handle = html.escape(mock.get("handle") or "Trend Threads")
+    username = html.escape(mock.get("username") or "trendthreads")
+    body = html.escape(mock.get("text") or "")
+    short = html.escape(mock.get("short") or "")
+    chars = mock.get("chars") or len(mock.get("text") or "")
+    short_chars = mock.get("short_chars") or len(mock.get("short") or "")
+    stamp = html.escape(day or "")
+    short_html = ""
+    if short:
+        short_html = (
+            f'<details class="short-hook"><summary>280-char hook · {short_chars} chars</summary>'
+            f'<p class="mock-body">{short}</p></details>'
+        )
+    return f'''<section class="mock-wrap">
+<p class="mock-badge">Mock post · not posted</p>
+<article class="mock-post">
+<div class="mock-head">
+<div class="avatar" aria-hidden="true">📡</div>
+<div>
+<div class="mock-name">{handle}</div>
+<div class="mock-user">@{username}{f" · {stamp}" if stamp else ""}</div>
+</div>
+</div>
+<p class="mock-body">{body}</p>
+<div class="mock-meta"><span>{chars} chars</span><span>💬  🔁  ❤️  🔖</span></div>
+</article>
+{short_html}
+</section>'''
 
 
 def collect_topics(raw) -> list:
@@ -112,6 +163,20 @@ h1{{font-size:22px}}h2{{font-size:15px;color:#8fa1b8;text-transform:uppercase;le
 .highlight{{background:#101b30;border:1px solid #1e2c47;border-radius:12px;padding:16px;margin:12px 0}}
 .highlight h3{{margin:4px 0 8px}}
 .related{{margin:12px 0}}.related ul{{padding-left:18px}}
+.summaries{{margin:16px 0}}.summary{{background:#101b30;border:1px solid #1e2c47;border-radius:12px;padding:14px;margin:10px 0}}
+.summary h3{{margin:0 0 8px;font-size:16px}}
+.summary p{{margin:0 0 8px;color:#c5d0e0}}
+.mock-wrap{{margin:18px 0}}
+.mock-badge{{display:inline-block;background:#1e2c47;color:#ffc156;font-size:11px;padding:2px 8px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}}
+.mock-post{{background:#101b30;border:1px solid #1e2c47;border-radius:16px;padding:16px}}
+.mock-head{{display:flex;gap:12px;align-items:center}}
+.avatar{{width:44px;height:44px;border-radius:50%;background:#1e2c47;display:grid;place-items:center;font-size:22px}}
+.mock-name{{font-weight:700}}
+.mock-user{{color:#8fa1b8;font-size:13px}}
+.mock-body{{white-space:pre-wrap;margin:12px 0 8px;font-size:17px;line-height:1.45}}
+.mock-meta{{display:flex;justify-content:space-between;color:#8fa1b8;font-size:12px;border-top:1px solid #1e2c47;padding-top:10px}}
+.short-hook{{margin-top:10px;padding:8px;background:#101b30;border:1px solid #1e2c47;border-radius:8px}}
+.short-hook summary{{cursor:pointer;color:#8fa1b8}}
 .x-refs{{margin:12px 0}}.x-refs details{{margin:6px 0;padding:8px;background:#101b30;border-radius:8px;border:1px solid #1e2c47}}
 .x-refs details summary{{cursor:pointer;font-weight:600}}
 .x-refs details ul{{margin:8px 0 0;padding-left:18px}}

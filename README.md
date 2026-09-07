@@ -8,9 +8,9 @@ so a fresh chat can resume without replaying old conversations.
 
 ```bash
 python3 scripts/scrape.py   # → data/<date>/trends.json (≥10 trends from ≥2 sources)
-python3 scripts/draft.py    # → data/<date>/icumi.md + icumi.json (single ICUMI post with X refs)
+python3 scripts/draft.py    # → data/<date>/icumi.md + icumi.json (summaries + mock X post)
 python3 scripts/deliver.py  # → prints ICUMI review message to stdout (for Hermes cron agent)
-python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages)
+python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages, includes tweet mock)
 ```
 
 ## Commands
@@ -24,9 +24,10 @@ make build   # Validate + test
 ## Structure
 
 - `scripts/scrape.py` — Multi-source trend fetcher (HN, Reddit, RSS, Google Trends) + X tweet lookup via firecrawl
-- `scripts/draft.py` — Picks top topic as ICUMI highlight, cross-refs X tweets, writes single-sweet post
-- `scripts/deliver.py` — Formats ICUMI post as Discord-ready review message
-- `scripts/render.py` — Renders ICUMI JSON to styled HTML docs (GitHub Pages)
+- `scripts/summarize.py` — Fetches each article, extracts a 1–2 sentence recap, builds copy-ready mock X posts
+- `scripts/draft.py` — Picks top topic as ICUMI highlight, writes summaries + mock post + X refs
+- `scripts/deliver.py` — Formats ICUMI post as Discord-ready review message (includes mock post)
+- `scripts/render.py` — Renders ICUMI JSON to styled HTML docs (GitHub Pages, tweet-card mock)
 - `tests/test_trend_threads.py` — Tests for all scripts
 - `tools/check_pii.sh` — PII/secret gate (pre-commit + pre-push)
 - `tools/check_readme_push.sh` — README freshness gate (pre-push)
@@ -40,6 +41,8 @@ make build   # Validate + test
 Each day produces a single "In Case You Missed It" post with:
 - **🔥 Highlight** — top-scoring trend with points and source link
 - **📌 Also trending** — 4 diverse related topics with HN points and URLs
+- **🐦 Mock post** — X-style card summarizing the articles (long post + 280-char hook)
+- **🧠 Article summaries** — 1–2 sentence recap per source link
 - **🐦 On X** — top X tweet links per topic (via firecrawl search)
 - Archive link to full history
 
@@ -52,4 +55,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ ICUMI post drafted with X cross-refs (QBittorrent 1042 pts highlight, 3 topics with X tweet links)
+Last verified run: ✅ Sep 6 mock X post + article summaries rendered (qBittorrent highlight, 4 recaps, 659-char long post / 195-char hook)

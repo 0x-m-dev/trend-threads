@@ -73,8 +73,62 @@ class TestFetchRSS:
 
 
 # ---------------------------------------------------------------------------
+# Summarize + mock post tests
+# ---------------------------------------------------------------------------
+
+OG_HTML = """<html><head>
+<meta property="og:description" content="Isar Aerospace became the first commercial space company from Europe to deliver satellites into orbit on its second flight.">
+</head><body><p>Skip to content</p><p>Cookie banner goes here for everyone visiting the site today.</p></body></html>"""
+
+BODY_HTML = """<html><body>
+<nav>Home About Contact</nav>
+<p>Skip to main content</p>
+<p>NetBSD 9.5 is the fifth and final release from the NetBSD 9 stable branch.</p>
+<p>This also marks the end-of-support for all NetBSD-9.x releases.</p>
+</body></html>"""
+
+
+class TestSummarize:
+    def test_extract_prefers_og_description(self):
+        import summarize
+        summary = summarize.extract_summary(OG_HTML, title="Ignored title")
+        assert "first commercial space company" in summary
+        assert "Ignored title" not in summary
+
+    def test_extract_falls_back_to_body(self):
+        import summarize
+        summary = summarize.extract_summary(BODY_HTML, title="NetBSD 9.5")
+        assert "final release" in summary
+
+    def test_clamp_tweet_limit(self):
+        import summarize
+        long = "word " * 80
+        out = summarize.clamp_tweet(long, limit=50)
+        assert len(out) <= 50
+        assert out.endswith("…")
+
+    def test_build_mock_post(self):
+        import summarize
+        from datetime import date as d
+        highlight = {"title": "qBit joke", "score": 1042}
+        related = [{"title": "Orbit"}, {"title": "Fly"}]
+        summaries = [
+            {"title": "qBit joke", "summary": "A sandbox-escape bit about torrents."},
+            {"title": "Orbit", "summary": "A European rocket reached orbit."},
+            {"title": "Fly", "summary": "LLM-written posts are obvious."},
+        ]
+        mock = summarize.build_mock_post(highlight, related, summaries, day=d(2026, 9, 6))
+        assert mock["text"].startswith("ICYMI — Sep 6")
+        assert "sandbox-escape" in mock["text"]
+        assert "European rocket" in mock["text"]
+        assert mock["short_chars"] <= 280
+        assert mock["chars"] == len(mock["text"])
+
+
+# ---------------------------------------------------------------------------
 # Draft tests (ICUMI format)
 # ---------------------------------------------------------------------------
+
 
 class TestDraft:
     """Test ICUMI-style drafting."""
@@ -128,10 +182,22 @@ class TestDraft:
     def test_icumi_json_format(self):
         highlight = {"title": "Test", "score": 50, "url": "https://t.test", "source": "hn"}
         related = [{"title": "R", "score": 10, "url": "https://r.test", "source": "hn"}]
-        data = draft.build_icumi_json(highlight, related, {})
+        mock = {"text": "ICYMI — Test", "short": "ICYMI: Test", "chars": 12}
+        summaries = [{"title": "Test", "summary": "A short recap.", "url": "https://t.test"}]
+        data = draft.build_icumi_json(highlight, related, {}, mock_post=mock, summaries=summaries)
         assert data["highlight"]["title"] == "Test"
         assert len(data["related"]) == 1
         assert data["total_trends"] == 2
+        assert data["mock_post"]["text"].startswith("ICYMI")
+        assert data["summaries"][0]["summary"] == "A short recap."
+
+    def test_icumi_includes_mock_post(self):
+        highlight = {"title": "Test story", "score": 999, "url": "https://t.test", "source": "hn"}
+        related = [{"title": "Related 1", "score": 100, "url": "https://r.test", "source": "hn"}]
+        mock = {"text": "ICYMI — a recap of Test story", "short": "ICYMI: Test story", "short_chars": 17}
+        text = draft.build_icumi(highlight, related, {}, mock_post=mock)
+        assert "Mock post" in text
+        assert "ICYMI — a recap of Test story" in text
 
     def test_normalize_title(self):
         t = draft.normalize_title("Test — story with  &#8217; quotes")
@@ -227,6 +293,28 @@ class TestRender:
         assert "<!doctype html>" in html
         assert "Trend Threads" in html
         assert "Test" in html
+
+    def test_mock_post_card(self):
+        from scripts.render import icumi_card
+        data = {
+            "highlight": {"title": "Test", "score": 100, "url": "https://t.test", "source": "hn"},
+            "related": [],
+            "x_refs": {},
+            "summaries": [{"title": "Test", "summary": "Something actually happened.", "url": "https://t.test"}],
+            "mock_post": {
+                "handle": "Trend Threads",
+                "username": "trendthreads",
+                "text": "ICYMI — Something actually happened.",
+                "short": "ICYMI: Something actually happened.",
+                "chars": 36,
+                "short_chars": 35,
+            },
+        }
+        card = icumi_card(data)
+        assert "mock-post" in card
+        assert "Something actually happened." in card
+        assert "Article summaries" in card
+        assert "@trendthreads" in card
 
 
 if __name__ == "__main__":
