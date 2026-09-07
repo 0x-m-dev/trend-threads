@@ -5,7 +5,8 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 
 ## Current state
 - Registered as an active Hermes Studio project.
-- Daily pipeline is scheduled for 8:00 AM.
+- Daily cron `0be930b365c6` (8:00 AM PDT) now includes article summaries + shitpost mock (headliner, take + link per story) and delivers to `#trend-threads`.
+- The daily cron is pinned to `xai-oauth / grok-4.6`; no fallback providers are configured, so rate limits fail closed rather than switching to Qwen.
 - Project workspace: Discord `#trend-threads` and the Trend Threads Desktop Project.
 - Preview: https://0x-m-dev.github.io/trend-threads/
 - Repository: https://github.com/0x-m-dev/trend-threads
@@ -22,7 +23,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 2. Improve extractive summaries only when a real output is too thin or wrong.
 
 ## Blockers
-- None currently recorded.
+- The next run should be observed after the xAI rate-limit window; do not run it manually merely to clear the previous drift error.
 
 ## Last verified
-2026-09-06 19:55 PDT
+2026-09-07 10:24 PDT
