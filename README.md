@@ -41,7 +41,7 @@ make build   # Validate + test
 Each day produces a single "In Case You Missed It" post with:
 - **🔥 Highlight** — top-scoring trend with points and source link
 - **📌 Also trending** — 4 diverse related topics with HN points and URLs
-- **🐦 Mock post** — X-style card summarizing the articles (long post + 280-char hook)
+- **🐦 Mock post** — shitpost headliner for the day's stack, then each story as a self-contained take + source link (plus a 280-char hook)
 - **🧠 Article summaries** — 1–2 sentence recap per source link
 - **🐦 On X** — top X tweet links per topic (via firecrawl search)
 - Archive link to full history
@@ -55,4 +55,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 6 mock X post + article summaries rendered (qBittorrent highlight, 4 recaps, 659-char long post / 195-char hook)
+Last verified run: ✅ Sep 6 mock rewritten as shitpost headliner + per-story take/link (1312 chars, 5 source URLs)

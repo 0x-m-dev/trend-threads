@@ -103,12 +103,21 @@ def icumi_card(data: dict) -> str:
     return cards
 
 
+def linkify_urls(text: str) -> str:
+    escaped = html.escape(text)
+    return re.sub(
+        r"(https://[^\s<]+)",
+        r'<a href="\1" target="_blank">\1</a>',
+        escaped,
+    )
+
+
 def mock_post_card(mock: dict, day: str = "") -> str:
     """X-style mock post so the summarization is copy-ready."""
     handle = html.escape(mock.get("handle") or "Trend Threads")
     username = html.escape(mock.get("username") or "trendthreads")
-    body = html.escape(mock.get("text") or "")
-    short = html.escape(mock.get("short") or "")
+    body = linkify_urls(mock.get("text") or "")
+    short = linkify_urls(mock.get("short") or "")
     chars = mock.get("chars") or len(mock.get("text") or "")
     short_chars = mock.get("short_chars") or len(mock.get("short") or "")
     stamp = html.escape(day or "")

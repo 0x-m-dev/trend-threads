@@ -142,15 +142,44 @@ def _one_liner(entry: dict) -> str:
     return (entry.get("summary") or entry.get("title") or "").strip()
 
 
+def _chip(item: dict, limit: int = 36) -> str:
+    title = (item.get("title") or "").strip()
+    words = title.split()
+    short = " ".join(words[:5]) if words else "untitled"
+    if len(short) > limit:
+        short = short[: limit - 1].rsplit(" ", 1)[0] + "…"
+    elif len(words) > 5:
+        short += "…"
+    score = item.get("score") or 0
+    if score:
+        return f"{short} {score}pts"
+    return short
+
+
+def headline_for(day: date, items: list[dict]) -> str:
+    weekday = day.strftime("%A")
+    if not items:
+        return f"{weekday}'s board: nothing landed."
+    chips = ", ".join(_chip(item) for item in items[:5])
+    return f"{weekday}'s board: {chips}."
+
+
+def _story_block(item: dict) -> str:
+    take = _one_liner(item)
+    url = (item.get("url") or "").strip()
+    if url:
+        return f"{take}\n{url}"
+    return take
+
+
 def build_mock_post(
     highlight: dict,
     related: list[dict],
     summaries: list[dict] | None = None,
     day: date | None = None,
 ) -> dict:
-    """Build long + short copy-ready X posts from article summaries."""
+    """Headliner, then each story as a self-contained take + link."""
     day = day or date.today()
-    stamp = f"{day.strftime('%b')} {day.day}"
 
     by_title = {}
     for row in summaries or []:
@@ -168,36 +197,26 @@ def build_mock_post(
             "score": item.get("score") or found.get("score") or 0,
         }
 
-    h = resolved(highlight) if highlight else {}
-    rel = [resolved(r) for r in related]
+    items = []
+    if highlight:
+        items.append(resolved(highlight))
+    items.extend(resolved(r) for r in related)
 
-    h_line = _one_liner(h) if h else "No highlight today."
-    score = h.get("score") or 0
-    score_bit = f" ({score} pts)" if score else ""
+    headline = headline_for(day, items)
+    blocks = [_story_block(item) for item in items if _one_liner(item)]
+    long_text = headline + ("\n\n" + "\n\n".join(blocks) if blocks else "")
 
-    long_lines = [
-        f"ICYMI — {stamp}",
-        "",
-        f"🔥 {h_line}{score_bit}",
-    ]
-    if rel:
-        long_lines.append("")
-        long_lines.append("Also:")
-        for item in rel:
-            long_lines.append(f"• {_one_liner(item)}")
-        long_lines.append("")
-        long_lines.append("Which one did you actually miss?")
-    long_text = "\n".join(long_lines).strip()
-
-    also = "; ".join(_one_liner(item) for item in rel[:4])
-    short = f"ICYMI: {h_line}"
-    if also:
-        short = f"{short} Also: {also}"
+    short = headline
+    if items:
+        extra = "; ".join(_chip(item, limit=28) for item in items[1:4])
+        if extra:
+            short = f"{headline} {extra}"
     short = clamp_tweet(short)
 
     return {
         "handle": "Trend Threads",
         "username": "trendthreads",
+        "headline": headline,
         "text": long_text,
         "short": short,
         "chars": len(long_text),

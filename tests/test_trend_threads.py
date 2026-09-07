@@ -110,17 +110,24 @@ class TestSummarize:
     def test_build_mock_post(self):
         import summarize
         from datetime import date as d
-        highlight = {"title": "qBit joke", "score": 1042}
-        related = [{"title": "Orbit"}, {"title": "Fly"}]
+        highlight = {"title": "qBit joke", "score": 1042, "url": "https://t.test/q"}
+        related = [
+            {"title": "Orbit", "url": "https://t.test/o"},
+            {"title": "Fly", "url": "https://t.test/f"},
+        ]
         summaries = [
             {"title": "qBit joke", "summary": "A sandbox-escape bit about torrents."},
             {"title": "Orbit", "summary": "A European rocket reached orbit."},
             {"title": "Fly", "summary": "LLM-written posts are obvious."},
         ]
         mock = summarize.build_mock_post(highlight, related, summaries, day=d(2026, 9, 6))
-        assert mock["text"].startswith("ICYMI — Sep 6")
+        assert mock["text"].startswith("Sunday's board:")
         assert "sandbox-escape" in mock["text"]
         assert "European rocket" in mock["text"]
+        assert "https://t.test/q" in mock["text"]
+        assert "https://t.test/o" in mock["text"]
+        assert mock["headline"].startswith("Sunday's board:")
+        assert "Which one did you" not in mock["text"]
         assert mock["short_chars"] <= 280
         assert mock["chars"] == len(mock["text"])
 
