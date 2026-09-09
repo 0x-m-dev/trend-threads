@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 8 mock rewritten as shitpost headliner + per-story take/link (1398 chars, 5 source URLs)
+Last verified run: ✅ Sep 9 mock rewritten as shitpost headliner + per-story take/link (Meta Muse, Flock cameras, Claude button, Tailwind/Shopify, DeepSeek Flash)
