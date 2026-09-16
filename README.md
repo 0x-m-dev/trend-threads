@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 9 mock rewritten as shitpost headliner + per-story take/link (Meta Muse, Flock cameras, Claude button, Tailwind/Shopify, DeepSeek Flash)
+Last verified run: ✅ Sep 16 mock rewritten as shitpost headliner + per-story take/link (Fugleramme bird frame, TypeSafe Jev, Mistral x Firefox, Dream-RSI, small programming tricks)
