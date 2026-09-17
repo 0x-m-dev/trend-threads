@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 16 mock rewritten as shitpost headliner + per-story take/link (Fugleramme bird frame, TypeSafe Jev, Mistral x Firefox, Dream-RSI, small programming tricks)
+Last verified run: ✅ Sep 17 mock rewritten as shitpost headliner + per-story take/link (CUDA Rust, Servo donation year, 20M PHP shim, 40C3, Fujitsu MONAKA)
