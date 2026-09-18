@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 17 mock rewritten as shitpost headliner + per-story take/link (CUDA Rust, Servo donation year, 20M PHP shim, 40C3, Fujitsu MONAKA)
+Last verified run: ✅ Sep 18 mock rewritten as shitpost headliner + per-story take/link (passkeys, OpenJev/SemIf, Bend 2, jemalloc 5.4.0, coding-agent harness paper)

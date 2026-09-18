@@ -10,7 +10,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Project workspace: Discord `#trend-threads` and the Trend Threads Desktop Project.
 - Preview: https://0x-m-dev.github.io/trend-threads/
 - Repository: https://github.com/0x-m-dev/trend-threads
-- Sep 17 mock post is a shitpost headliner plus per-story take + link (CUDA Rust, Servo donation year, 20M PHP shim, 40C3 Model Citizens, Fujitsu MONAKA).
+- Sep 18 mock post is a shitpost headliner plus per-story take + link (passkeys, OpenJev/SemIf, Bend 2, jemalloc 5.4.0, coding-agent harness paper).
 
 ## Decisions
 - Keep research and generation in the project workspace, not `#command-center`.
@@ -19,7 +19,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Mock post shape: one headliner for the day's stack, then each story as a self-contained take with its source link. Voice is shitpost, not LLM recap.
 
 ## Next actions
-1. Review the Sep 17 mock for voice and whether each take stands without the article.
+1. Review the Sep 18 mock for voice and whether each take stands without the article.
 2. Improve extractive summaries only when a real output is too thin or wrong.
 3. Reddit scrape still 403s; HN + news RSS were enough for the >=10 / >=2 source bar.
 
@@ -27,4 +27,4 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Reddit hot returns HTTP 403. Pipeline still met scrape acceptance via HN + news RSS.
 
 ## Last verified
-2026-09-17 08:00 PDT
+2026-09-18 08:00 PDT
