@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 18 mock rewritten as shitpost headliner + per-story take/link (passkeys, OpenJev/SemIf, Bend 2, jemalloc 5.4.0, coding-agent harness paper)
+Last verified run: ✅ Sep 21 mock rewritten as shitpost headliner + per-story take/link (Disney+ ads on paid tiers, Grim Fandango puzzle bible, Kev/Qwen3.5, jev-leftpad, Cantrill on Sun)
