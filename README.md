@@ -60,4 +60,4 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 21 mock rewritten as shitpost headliner + per-story take/link (Disney+ ads on paid tiers, Grim Fandango puzzle bible, Kev/Qwen3.5, jev-leftpad, Cantrill on Sun)
+Last verified run: ✅ Sep 22 mock rewritten as shitpost headliner + per-story take/link (MiMo v2.6, spymarks, gzip LM, GPT-6 Enigma break, Apple iOS ads)
