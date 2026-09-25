@@ -60,6 +60,6 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 23 mock rewritten as shitpost headliner + per-story take/link (Jev 25 lines, Claude Code AGENTS.md, Portobello clock, Stripe Kai, Strands harness)
+Last verified run: ✅ Sep 25 mock rewritten as shitpost headliner + per-story take/link (F-Droid 2.0, Dutch DAWO NixOS, M6 86Box PII, git-bug, Go SIMD)
 
-Last pipeline run: 2026-09-24 (Claude ART, Snapdragon X2 Linux, UK iCloud two-tier).
+Last pipeline run: 2026-09-25 (F-Droid 2.0, DAWO NixOS, M6 PII emu, git-bug, Go SIMD).
