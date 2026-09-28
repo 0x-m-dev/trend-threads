@@ -60,6 +60,6 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 25 mock rewritten as shitpost headliner + per-story take/link (F-Droid 2.0, Dutch DAWO NixOS, M6 86Box PII, git-bug, Go SIMD)
+Last verified run: ✅ Sep 28 mock rewritten as shitpost headliner + per-story take/link (NVIDIA 1993 options, Parley IRC, Postgres AT TIME ZONE, coding is not solved, Borderline maps)
 
-Last pipeline run: 2026-09-25 (F-Droid 2.0, DAWO NixOS, M6 PII emu, git-bug, Go SIMD).
+Last pipeline run: 2026-09-28 (NVIDIA options, Parley, Postgres timezone, coding is not solved, 37500 borders).
