@@ -10,7 +10,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Project workspace: Discord `#trend-threads` and the Trend Threads Desktop Project.
 - Preview: https://0x-m-dev.github.io/trend-threads/
 - Repository: https://github.com/0x-m-dev/trend-threads
-- Sep 28 mock: NVIDIA 1993 option miss (904), Parley IRC federation (171), Postgres AT TIME ZONE footgun (107), coding is not solved (100), 37,500 Borderline maps (99).
+- Sep 29 mock: hosting collapse 42%→12% (476), chatbot trackers (353), Delhi 50→5% grid loss (252), PostHog Jeeves 9B (164), Godot+Conan C++ (128).
 
 ## Decisions
 - Keep research and generation in the project workspace, not `#command-center`.
@@ -19,12 +19,12 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Mock post shape: one headliner for the day's stack, then each story as a self-contained take with its source link. Voice is shitpost, not LLM recap.
 
 ## Next actions
-1. Review the Sep 28 mock for voice and whether each take stands without the article.
-2. Improve extractive summaries only when a real output is too thin or wrong.
+1. Review the Sep 29 mock for voice and whether each take stands without the article.
+2. Improve extractive summaries only when a real output is too thin or wrong (PDF fetch still dumps binary).
 3. Reddit scrape still 403s; HN + news RSS were enough for the >=10 / >=2 source bar.
 
 ## Blockers
 - Reddit hot returns HTTP 403. Pipeline still met scrape acceptance via HN + news RSS.
 
 ## Last verified
-2026-09-28 08:00 PDT
+2026-09-29 08:00 PDT
