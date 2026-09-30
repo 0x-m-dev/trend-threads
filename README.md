@@ -60,6 +60,6 @@ reviewed in #trend-threads before anything is posted to X.
 
 ## Pipeline Output
 
-Last verified run: ✅ Sep 29 mock rewritten as shitpost headliner + per-story take/link (hosting collapse, chatbot trackers, Delhi grid loss, PostHog Jeeves, Godot+Conan)
+Last verified run: ✅ Sep 30 mock rewritten as shitpost headliner + per-story take/link (livenerf Opus 5.5, OpenAI Dots, Pi MCP, Factorio quality, JBR-001)
 
-Last pipeline run: 2026-09-29 (hosting 42%→12%, IMDEA chatbot trackers, Delhi 50→5% loss, Jeeves 9B, Godot C++ via Conan).
+Last pipeline run: 2026-09-30 (livenerf 774, Dots 696, Pi MCP 352, Factorio quality 180, JBR-001 80).
