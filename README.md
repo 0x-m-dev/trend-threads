@@ -13,6 +13,8 @@ python3 scripts/deliver.py  # → prints ICUMI review message to stdout (for Her
 python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages, includes tweet mock)
 ```
 
+Latest mock (2026-10-01): Gemini 4 Argon (1531), StreetComplete iOS TestFlight (265), Chromebook 10-year cutoff (191), OpenDLSS-NR (181), Meta AI tax dodge (103).
+
 Hermes job `0be930b365c6` runs daily at 8:00 AM PDT and is pinned to
 `xai-oauth / grok-4.6`. No fallback providers are configured: if xAI is
 rate-limited or unavailable, the run fails closed and waits for the next
