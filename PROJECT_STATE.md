@@ -10,7 +10,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Project workspace: Discord `#trend-threads` and the Trend Threads Desktop Project.
 - Preview: https://0x-m-dev.github.io/trend-threads/
 - Repository: https://github.com/0x-m-dev/trend-threads
-- Oct 1 mock: Gemini 4 Argon (1531), StreetComplete iOS TestFlight (265), Chromebook 10-year cutoff (191), OpenDLSS-NR (181), Meta AI tax dodge (103).
+- Oct 4 mock: Qwen 3.8 Flash Next / Strata on RTX 4090 (464), lighthouse globe (121), RemoveMacAI (52), Google Nebraska redaction (49), Jane Street ASIC puzzle (43).
 
 ## Decisions
 - Keep research and generation in the project workspace, not `#command-center`.
@@ -19,7 +19,7 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Mock post shape: one headliner for the day's stack, then each story as a self-contained take with its source link. Voice is shitpost, not LLM recap.
 
 ## Next actions
-1. Review the Oct 1 mock for voice and whether each take stands without the article.
+1. Review the Oct 4 mock for voice and whether each take stands without the article.
 2. Improve extractive summaries only when a real output is too thin or wrong (PDF fetch still dumps binary).
 3. Reddit scrape still 403s; HN + news RSS were enough for the >=10 / >=2 source bar.
 
@@ -27,4 +27,4 @@ Publish a concise, sourced daily ICYMI post from real trending topics.
 - Reddit hot returns HTTP 403. Pipeline still met scrape acceptance via HN + news RSS.
 
 ## Last verified
-2026-10-01 08:00 PDT
+2026-10-04 08:00 PDT
