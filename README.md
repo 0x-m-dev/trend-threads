@@ -13,7 +13,7 @@ python3 scripts/deliver.py  # → prints ICUMI review message to stdout (for Her
 python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages, includes tweet mock)
 ```
 
-Latest mock (2026-10-04): Qwen 3.8 Flash Next / Strata RTX 4090 (464), lighthouse globe (121), RemoveMacAI (52), Google Nebraska redaction (49), Jane Street ASIC puzzle (43).
+Latest mock (2026-10-05): Denmark CPR dump 8.8M (305), RobCo $1B (231), Cloudflare Web Search API (165), GrapheneOS may skip Pixel 11 (135), Huawei/Qualcomm patent deal (107).
 
 Hermes job `0be930b365c6` runs daily at 8:00 AM PDT and is pinned to
 `xai-oauth / grok-4.6`. No fallback providers are configured: if xAI is
