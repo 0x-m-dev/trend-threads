@@ -65,3 +65,5 @@ reviewed in #trend-threads before anything is posted to X.
 Last verified run: ✅ Oct 4 mock rewritten as shitpost headliner + per-story take/link (Strata Qwen 125B, lighthouse globe, RemoveMacAI, Google Nebraska, Jane Street ASIC)
 
 Last pipeline run: 2026-09-30 (livenerf 774, Dots 696, Pi MCP 352, Factorio quality 180, JBR-001 80).
+
+Latest daily draft: 2026-10-06 (Mistral Large 4 / JetBrains / Halzen / Polars 2.0 / Tapo TPAP).
