@@ -13,7 +13,7 @@ python3 scripts/deliver.py  # → prints ICUMI review message to stdout (for Her
 python3 scripts/render.py   # → docs/<date>/index.html (GitHub Pages, includes tweet mock)
 ```
 
-Latest mock (2026-10-05): Denmark CPR dump 8.8M (305), RobCo $1B (231), Cloudflare Web Search API (165), GrapheneOS may skip Pixel 11 (135), Huawei/Qualcomm patent deal (107).
+Latest mock (2026-10-07): JPEG XL in Chrome 155 (249), C64 keycap font (232), Chemistry Nobel Kagan/Soai (170), LLM telegraphese (44), walkable Wikipedia art museum (39).
 
 Hermes job `0be930b365c6` runs daily at 8:00 AM PDT and is pinned to
 `xai-oauth / grok-4.6`. No fallback providers are configured: if xAI is
@@ -66,4 +66,4 @@ Last verified run: ✅ Oct 4 mock rewritten as shitpost headliner + per-story ta
 
 Last pipeline run: 2026-09-30 (livenerf 774, Dots 696, Pi MCP 352, Factorio quality 180, JBR-001 80).
 
-Latest daily draft: 2026-10-06 (Mistral Large 4 / JetBrains / Halzen / Polars 2.0 / Tapo TPAP).
+Latest daily draft: 2026-10-07 (JPEG XL Chrome / C64 keycap font / Chemistry Nobel / telegraphese / art museum).
